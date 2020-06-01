@@ -2,7 +2,7 @@
 datasets/cityscapes/input/
 logs
 *__pycache__
-pretrained
+pretrained/*
 visualize
 *.pth
 *.log
