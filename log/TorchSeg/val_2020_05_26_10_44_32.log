@@ -1,0 +1,21 @@
+Model: /home/junyi/segmentation/TorchSeg/log/TorchSeg/snapshot/epoch-last.pth
+1 road  	97.840%
+2 sidewalk	83.042%
+3 building	92.002%
+4 wall  	53.851%
+5 fence 	56.507%
+6 pole  	62.951%
+7 traffic light	70.364%
+8 traffic sign	78.558%
+9 vegetation	92.266%
+10 terrain	63.379%
+11 sky  	94.786%
+12 person	80.728%
+13 rider	59.364%
+14 car  	94.820%
+15 truck	76.657%
+16 bus  	84.445%
+17 train	68.568%
+18 motorcycle	61.985%
+19 bicycle	76.387%
+----------------------------     mean_IU 	76.237%	mean_IU_no_back	75.037%	mean_pixel_ACC	95.808%

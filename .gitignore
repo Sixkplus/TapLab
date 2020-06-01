@@ -1,0 +1,7 @@
+.vscode
+datasets/cityscapes/input/
+logs
+*__pycache__
+pretrained
+visualize
+*.pth
