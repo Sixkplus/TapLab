@@ -1,4 +1,4 @@
-# TorchSeg
+# Semantic segmentation
 This project aims at providing a fast, modular reference implementation for semantic segmentation models using PyTorch.
 
 ## Citation
