@@ -23,6 +23,7 @@ from tqdm import trange
 from config import config
 from dataloader import get_train_loader, get_eval_loader
 from network import BiSeNet
+from mobile_light_fpn import Mobile_Light_FPN
 from datasets import Cityscapes
 from datasets.cityscapes import colors, class_names
 
@@ -88,7 +89,7 @@ if __name__ == "__main__":
 
     # data loader
     # batch size = 4
-    eval_loader, eval_sampler = get_eval_loader(None, Cityscapes, 10)
+    eval_loader, eval_sampler = get_eval_loader(None, Cityscapes, 4)
     
     # load from checkpoint
     ckpt_dir = osp.join(config.snapshot_dir,'epoch-%s.pth' % args.epochs)
