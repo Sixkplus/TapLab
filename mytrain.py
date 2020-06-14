@@ -20,7 +20,7 @@ from torch.backends import cudnn
 from config import config
 from dataloader import get_train_loader, get_eval_loader
 from network import BiSeNet
-from mobile_light_fpn import Mobile_Light_FPN
+from mobile_light_fpn import Mobile_Light_FPN, Res18_Light_FPN
 from datasets import Cityscapes
 from datasets.cityscapes import colors
 
@@ -72,12 +72,12 @@ criterion = ProbOhemCrossEntropy2d(ignore_label=255, thresh=0.7,
 # BatchNorm2d = torch.nn.SyncBatchNorm
 BatchNorm2d = nn.BatchNorm2d
 
-model = Mobile_Light_FPN(config.num_classes, is_training=True,
+model = Res18_Light_FPN(config.num_classes, is_training=True,
                 criterion=criterion,
                 pretrained_model=config.pretrained_model,
                 norm_layer=BatchNorm2d)
 
-val_model = Mobile_Light_FPN(config.num_classes, is_training=False,
+val_model = Res18_Light_FPN(config.num_classes, is_training=False,
                 criterion=criterion,
                 pretrained_model=None,
                 norm_layer=BatchNorm2d)
@@ -168,28 +168,28 @@ for epoch in range(config.nepochs):
         pbar.set_description(print_str, refresh=False)
 
     # validation and tensorboard
-    # val_model.load_state_dict(model.state_dict())
-    # writer.add_scalar("training_loss", running_loss/config.niters_per_epoch, current_idx)
-    # with torch.no_grad():
-    #     val_model.eval()
-    #     eval_dataloader = iter(eval_loader)
-    #     eval_batch = eval_dataloader.next()
-    #     imgs = eval_batch['data']
-    #     gts = eval_batch['label']
+    val_model.load_state_dict(model.state_dict())
+    writer.add_scalar("training_loss", running_loss/config.niters_per_epoch, current_idx)
+    with torch.no_grad():
+        val_model.eval()
+        eval_dataloader = iter(eval_loader)
+        eval_batch = eval_dataloader.next()
+        imgs = eval_batch['data']
+        gts = eval_batch['label']
 
-    #     imgs = imgs.cuda(non_blocking=True)
-    #     gts = gts.cuda(non_blocking=True)
+        imgs = imgs.cuda(non_blocking=True)
+        gts = gts.cuda(non_blocking=True)
 
-    #     preds = val_model(imgs)
-    #     # change prediction to color for visualization
-    #     preds_color = decode_color(colors, preds, config.num_classes)
+        preds = val_model(imgs)
+        # change prediction to color for visualization
+        preds_color = decode_color(colors, preds, config.num_classes)
 
-    #     # tensorboard visulization
-    #     vis_imgs = torchvision.utils.make_grid(de_nomalize(imgs, config.image_mean, config.image_std))
-    #     vis_preds = torchvision.utils.make_grid(preds_color)
+        # tensorboard visulization
+        vis_imgs = torchvision.utils.make_grid(de_nomalize(imgs, config.image_mean, config.image_std))
+        vis_preds = torchvision.utils.make_grid(preds_color)
 
-    #     writer.add_image('Input_images', vis_imgs, current_idx)
-    #     writer.add_image('Predictions', 255-vis_preds, current_idx)
+        writer.add_image('Input_images', vis_imgs, current_idx)
+        writer.add_image('Predictions', 255-vis_preds, current_idx)
     
 
     # save

@@ -5,7 +5,8 @@ import torch.nn as nn
 import torch.nn.functional as F
 
 from MobileNetV1 import MobileNet
-
+from base_model import resnet18
+from config import config
 
 class PoolAndAlign(nn.Module):
     def __init__(self, in_planes, out_planes, scale, norm_layer=nn.BatchNorm2d):
@@ -132,6 +133,70 @@ class Mobile_Light_FPN(nn.Module):
         x = self.decoder[0](x, encoder_layers["layer4"])
         x = self.decoder[1](x, encoder_layers["layer3"])
         x = self.decoder[2](x, encoder_layers["layer2"])
+
+        pred_out = F.interpolate(self.conv(x), size=(h,w), align_corners=True, mode="bilinear")
+
+        if self.is_training:
+            loss = self.criterion(pred_out, label)
+            return loss
+
+        return F.log_softmax(pred_out, dim=1)
+
+class Res18_Light_FPN(nn.Module):
+    def __init__(self, out_planes, is_training,
+                 criterion, pretrained_model=None,
+                 norm_layer=nn.BatchNorm2d):
+        super(Res18_Light_FPN, self).__init__()
+        
+        # encoder
+        self.backbone = resnet18(pretrained_model, norm_layer=norm_layer,
+                                     bn_eps=config.bn_eps,
+                                     bn_momentum=config.bn_momentum,
+                                     deep_stem=False, stem_width=64)
+        
+
+        # spp default pyramids: [1, 2, 4, 8]
+        self.spp = SpatailPyramidPooling(512, 512, 128, 256, [1,2,4,8])
+
+        # decoder - lateral connections
+        self.decoder_configs = [
+            # n_features, n_laterals, n_output
+            [256, 256, 128],
+            [128, 128, 64],
+            [64, 64, 64]
+        ]
+
+        decoder = []
+        for i in range(len(self.decoder_configs)):
+            in_planes, lateral_planes, out_planes = self.decoder_configs[i]
+            decoder.append(LateralConnect(in_planes, lateral_planes, out_planes))
+        
+        # classifier
+        self.conv = nn.Conv2d(self.decoder_configs[-1][-1], out_planes, 3, 1, 1)
+
+
+        self.business_layer = []
+        self.is_training = is_training
+
+        self.decoder = nn.ModuleList(decoder)
+
+        self.business_layer.append(self.backbone)
+        self.business_layer.append(self.spp)
+        self.business_layer.append(self.decoder)
+        self.business_layer.append(self.conv)
+
+        if is_training:
+            self.criterion = criterion
+
+    def forward(self, data, label=None):
+        _, _, h, w = data.shape
+
+        encoder_layers = self.backbone(data)
+        x = self.spp(encoder_layers[3])
+
+        x = self.decoder[0](x, encoder_layers[2])
+        x = self.decoder[1](x, encoder_layers[1])
+        x = self.decoder[2](x, encoder_layers[0])
 
         pred_out = F.interpolate(self.conv(x), size=(h,w), align_corners=True, mode="bilinear")
 
