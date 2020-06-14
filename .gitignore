@@ -6,3 +6,4 @@ pretrained/*
 visualize
 *.pth
 *.log
+mobilenet.py
