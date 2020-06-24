@@ -23,7 +23,7 @@ from tqdm import trange
 from config import config
 from dataloader import get_train_loader, get_eval_loader
 from network import BiSeNet
-from mobile_light_fpn import Mobile_Light_FPN
+from mobile_light_fpn import Mobile_Light_FPN, Res18_Light_FPN
 from datasets import Cityscapes
 from datasets.cityscapes import colors, class_names
 
@@ -82,8 +82,13 @@ if __name__ == "__main__":
     args = parser.parse_args()
 
     # model
-    val_model = Mobile_Light_FPN(config.num_classes, is_training=False,
-                criterion=None)
+    # val_model = Mobile_Light_FPN(config.num_classes, is_training=False,
+    #             criterion=None)
+    
+    val_model = Res18_Light_FPN(config.num_classes, is_training=False,
+                 criterion=None)
+    
+    val_model = BiSeNet(config.num_classes, False, None)
     device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
     val_model.to(device)
 
@@ -92,8 +97,18 @@ if __name__ == "__main__":
     eval_loader, eval_sampler = get_eval_loader(None, Cityscapes, 4)
     
     # load from checkpoint
-    ckpt_dir = osp.join(config.snapshot_dir,'epoch-%s.pth' % args.epochs)
-    ckpt_dict = torch.load(ckpt_dir)()
+    try:
+        ckpt_dir = osp.join(config.snapshot_dir,'epoch-%s.pth' % args.epochs)
+        ckpt_dict = torch.load(ckpt_dir)()
+    except:
+        ckpt_dir = args.epochs
+        
+        if ckpt_dir == "./cityscapes-bisenet-R18.pth":
+            ckpt_dict = torch.load(ckpt_dir)
+            ckpt_dict = ckpt_dict['model']
+        else:
+            ckpt_dict = torch.load(ckpt_dir)()
+
     val_model.load_state_dict( { key.replace("module.", ""):ckpt_dict[key] for key in ckpt_dict.keys() } )
 
     # hist
