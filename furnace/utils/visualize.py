@@ -123,3 +123,88 @@ def de_nomalize(images, mean, std):
     std = torch.Tensor(std).cuda()
 
     return ((images.permute(0,2,3,1) * std) + mean).permute(0,3,1,2)
+
+
+label_colours_cityscapes = [[128, 64, 128], [244, 35, 231], [69, 69, 69]
+                # 0 = road, 1 = sidewalk, 2 = building
+                ,[102, 102, 156], [190, 153, 153], [153, 153, 153]
+                # 3 = wall, 4 = fence, 5 = pole
+                ,[250, 170, 29], [219, 219, 0], [106, 142, 35]
+                # 6 = traffic light, 7 = traffic sign, 8 = vegetation
+                ,[152, 250, 152], [69, 129, 180], [219, 19, 60]
+                # 9 = terrain, 10 = sky, 11 = person
+                ,[255, 0, 0], [0, 0, 142], [0, 0, 69]
+                # 12 = rider, 13 = car, 14 = truck
+                ,[0, 60, 100], [0, 79, 100], [0, 0, 230]
+                # 15 = bus, 16 = train, 17 = motocycle
+                ,[119, 10, 32]]
+                # 18 = bicycle
+
+label_colours_camvid = [
+    # 0 = building, 1 = tree, 2 = sky
+    [128, 0, 0], [128,128,0], [128,128,128], 
+    # 3 = car, 4 = signsymbol, 5 = road
+    [64,0,128], [192,128,128], [128,64,128], 
+    # 6 = pedestrian, 7 = fence, 8 = column_pole
+    [64,64,0], [64,64,128], [192,192,128], 
+    # 9 = sidewalk, 10 = bicyclist
+    [0,0,192], [0,128,192]
+]
+
+label_colours_freetech = [[153,153,153], [128, 64, 128], [0, 0, 142]
+                # 0 = background, 1 = road, 2 = vehicle
+                ,[255, 0, 0], [219, 19, 60], [219, 219, 0]]
+                # 3 = rider, 4 = walker, 5 = cone
+
+label_colours_agric = [[153,153,153], [255,0,0], [219, 219, 0]
+                # 0 = background, 1 = 烤烟, 2 = 玉米
+                ,[0, 0, 255]]
+                # 3 = 薏米仁
+
+id_list_cityscapes = [7, 8, 11, 12, 13, 17, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 31, 32, 33]
+id_list_freetech = [0,1,2,3,4,5]
+id_list_agric = [0,1,2,3]
+id_list_camvid = [0,1,2,3,4,5,6,7,8,9,10]
+
+freetech_id_list = []
+
+def decode_labels(mask, img_shape, num_classes):
+    if num_classes == 6:
+        color_table = label_colours_freetech
+    elif num_classes == 4:
+        color_table = label_colours_agric
+    elif num_classes == 11:
+        color_table = label_colours_camvid
+    else:
+        color_table = label_colours_cityscapes
+
+    color_mat = np.array(color_table)
+    # one-hot
+    one_hot_matrix = np.eye(num_classes)
+    onehot_output = one_hot_matrix[mask]
+    onehot_output = np.reshape(onehot_output, (-1, num_classes))
+
+    pred = onehot_output@color_mat
+    pred = np.reshape(pred, (int(img_shape[0]), int(img_shape[1]), 3)).astype(np.uint8)
+    
+    return pred
+
+def decode_ids(mask, img_shape, num_classes):
+    if num_classes == 6:
+        id_list = id_list_freetech
+    elif num_classes ==4:
+        id_list = id_list_agric
+    elif num_classes == 11:
+        id_list = id_list_camvid
+    else:
+        id_list = id_list_cityscapes
+    id_mat = np.array(id_list).reshape((num_classes, 1))
+    # one-hot
+    one_hot_matrix = np.eye(num_classes)
+    onehot_output = one_hot_matrix[mask]
+    onehot_output = np.reshape(onehot_output, (-1, num_classes))
+    
+    pred = onehot_output@id_mat
+    pred = np.reshape(pred, (int(img_shape[0]), int(img_shape[1]), 1)).astype(np.uint8)
+    
+    return pred
