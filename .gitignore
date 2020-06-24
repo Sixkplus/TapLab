@@ -7,3 +7,5 @@ visualize
 *.pth
 *.log
 mobilenet.py
+Test*
+val_12
