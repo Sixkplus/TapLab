@@ -93,7 +93,7 @@ if __name__ == "__main__":
     h, w = 1024, 2048
     input_size = (1024, 2048)
     feat_size = (h, w)
-    block_size = (h//4, w//4)
+    block_size = (h//2, w//4)
 
     grid = grid_gen((1,feat_size[0], feat_size[1]))
 
