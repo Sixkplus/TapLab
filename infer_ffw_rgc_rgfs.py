@@ -200,7 +200,7 @@ if __name__ == "__main__":
                         proc_time = time.time()-st1
                         print("RGFS time: ", proc_time)
                     else:
-                        res = res + flow_origin*0.1
+                        res = res
                         #res = np.sum(res > 200, axis=2)
                         #res = res > 25
 
