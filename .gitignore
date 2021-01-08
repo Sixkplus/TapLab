@@ -9,3 +9,4 @@ visualize
 mobilenet.py
 Test*
 val_12
+*.sh
