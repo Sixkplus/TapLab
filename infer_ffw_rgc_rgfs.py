@@ -88,7 +88,10 @@ if __name__ == "__main__":
     block_index_h = [ [i*block_size[0]//2, i*block_size[0]//2 + block_size[0]] for i in range(input_size[0]//block_size[0] * 2 -1)]
     flow = np.zeros([1, feat_size[0], feat_size[1], 2])
 
-    # model
+    # -----------------------------------------------------------
+    # ----------------------Set the model------------------------
+    # -----------------------------------------------------------
+
     # val_model = Mobile_Light_FPN(config.num_classes, is_training=False,
     #             criterion=None)
     
@@ -113,7 +116,10 @@ if __name__ == "__main__":
     # upsample after prediction
     interp = nn.Upsample(size=(h, w), mode='bilinear', align_corners=True)
 
-    # Inference
+    # -----------------------------------------------------------
+    # ------------------------Inference--------------------------
+    # -----------------------------------------------------------
+
     for val_folder in val_folders:
         path_mv = osp.join(data_dir, val_folder[0])
         path_img = osp.join(data_dir, val_folder)
@@ -178,6 +184,7 @@ if __name__ == "__main__":
                         torch.cuda.synchronize()
                         proc_time = time.time()-st
                         print("RGFS time: ", proc_time)
+                        block_scores = np.zeros(len(block_index_w)*len(block_index_h))
                     else:
                         # FFW
                         torch.cuda.synchronize()
