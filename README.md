@@ -9,20 +9,19 @@ We conducted experiments in the following environment:
  - FFmpeg
  - pytorch 1.2
 
-## 
 
-## 0. Build the data loader to extract MV and Res
+# 0. Build the data loader to extract MV and Res
 First, build the dataloader according to [GETTING_STARTED](./data_loader/GETTING_STARTED.md)
 
-# Demo
+# 1. Demo
 
-## 1. Offline inference
+## 1.1. Offline inference
 Extract and store the motion vectors, then load them in the inference phase.
 
-## 2. Online inferecne
+## 1.2. Online inferecne
 Extract and Inference
 
-# Eval
+# 2. Eval
 
 # Citation
 The following are BibTeX references. The BibTeX entry requires the url LaTeX package.
