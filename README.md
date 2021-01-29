@@ -11,15 +11,24 @@ We conducted experiments in the following environment:
 
 ## 
 
-### 1. Build the data loader to extract MV and Res
+## 0. Build the data loader to extract MV and Res
 First, build the dataloader according to [GETTING_STARTED](./data_loader/GETTING_STARTED.md)
 
-### 2. 
+# Demo
 
-## Citation
+## 1. Offline inference
+Extract and store the motion vectors, then load them in the inference phase.
+
+## 2. Online inferecne
+Extract and Inference
+
+# Eval
+
+# Citation
 The following are BibTeX references. The BibTeX entry requires the url LaTeX package.
 
 Please consider citing this project in your publications if it helps your research. 
+
 ```
 @misc{torchseg2019,
   author =       {Yu, Changqian},
@@ -29,7 +38,13 @@ Please consider citing this project in your publications if it helps your resear
 }
 ```
 
+```
+@misc{torchseg2019,
+  author =       {Wu, Chao-Yuan},
+  title =        {pytorch-coviar},
+  howpublished = {\url{https://github.com/chaoyuaw/pytorch-coviar}},
+  year =         {2018}
+}
+```
 
-## Why this name, Furnace?
-Furnace means the **Alchemical Furnace**. We all are the **Alchemist**, so I hope everyone can have a good alchemical furnace to practice the **Alchemy**. Hope you can be a excellent alchemist. 
 
