@@ -17,11 +17,17 @@ First, build the dataloader according to [GETTING_STARTED](./data_loader/GETTING
 
 ## 1.1. Offline inference
 Extract and store the motion vectors, then load them in the inference phase.
+`decode.py`
+`infer_ffw_rgc_rgfs.py`
 
 ## 1.2. Online inferecne
 Extract and Inference
+`demo.py`
 
-# 2. Eval
+# 2. For evaluation
+We also offer an inference script for evalutation on the cityscapes dataset.
+`decode.py`
+`infer_ffw_rgc_rgfs.py`
 
 # Citation
 The following are BibTeX references. The BibTeX entry requires the url LaTeX package.
