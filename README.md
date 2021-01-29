@@ -1,5 +1,20 @@
-# Semantic segmentation
-This project aims at providing a fast, modular reference implementation for semantic segmentation models using PyTorch.
+# TapLab
+This project aims at providing a fast, modular reference implementation for 
+semantic segmentation inference models.
+
+## Environment
+We conducted experiments in the following environment:
+ - Linux
+ - Python 3.6
+ - FFmpeg
+ - pytorch 1.2
+
+## 
+
+### 1. Build the data loader to extract MV and Res
+First, build the dataloader according to [GETTING_STARTED](./data_loader/GETTING_STARTED.md)
+
+### 2. 
 
 ## Citation
 The following are BibTeX references. The BibTeX entry requires the url LaTeX package.
