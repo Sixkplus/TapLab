@@ -39,7 +39,7 @@ Please consider citing this project in your publications if it helps your resear
 ```
 
 ```
-@misc{torchseg2019,
+@misc{coviar-torch,
   author =       {Wu, Chao-Yuan},
   title =        {pytorch-coviar},
   howpublished = {\url{https://github.com/chaoyuaw/pytorch-coviar}},
