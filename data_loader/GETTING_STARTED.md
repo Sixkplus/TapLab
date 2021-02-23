@@ -49,3 +49,14 @@ For example,
 load(input.mp4, 3, 8, 1, True)
 ```
 returns the accumulated motion vectors of the 9th frame of the 4th GOP.
+
+## Citation
+
+```
+@misc{coviar-torch,
+  author =       {Wu, Chao-Yuan},
+  title =        {pytorch-coviar},
+  howpublished = {\url{https://github.com/chaoyuaw/pytorch-coviar}},
+  year =         {2018}
+}
+```
