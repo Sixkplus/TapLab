@@ -20,7 +20,7 @@ cfg = C
 C.seed = 12345
 
 """please config ROOT_dir and user when u first using"""
-C.repo_name = 'semantic-segmentation-torch'
+C.repo_name = 'TapLab'
 C.abs_dir = osp.realpath(".")
 C.this_dir = C.abs_dir.split(osp.sep)[-1]
 C.root_dir = C.abs_dir[:C.abs_dir.index(C.repo_name) + len(C.repo_name)]
