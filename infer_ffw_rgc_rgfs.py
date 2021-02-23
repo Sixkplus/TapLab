@@ -75,7 +75,7 @@ if __name__ == "__main__":
     parser.add_argument('-g','--gop', type=int, default=12, help='The GOP number.')
     args = parser.parse_args()
 
-    data_dir = './val_12'
+    data_dir = './val_sequence'
     val_folders = ['frankfurt', 'lindau', 'munster']
 
     h, w = 1024, 2048
