@@ -109,7 +109,6 @@ We also offer an inference script for evalutation on the cityscapes dataset.
 ### 2.1. Inference (offline)
  - `python infer_ffw_rgc_rgfs.py --rgc --rgfs --gop 12`
  - The results are generated in `./Test_id`, you can use them to evaluate the accuracy(mIoU).
- - ![Demo output](./Test_alpha/lindau_000000_000019_leftImg8bit_ab.png)
 
 ## Citation
 The following are BibTeX references. The BibTeX entry requires the url LaTeX package.
