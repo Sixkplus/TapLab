@@ -1,6 +1,5 @@
-# TapLab
-This project aims at providing a fast, modular reference implementation for 
-semantic segmentation inference models.
+# TapLab-torch
+This project aims at providing a fast, modular implementation for semantic segmentation inference models.
 
 ## Environment
 We conducted experiments in the following environment:
@@ -17,7 +16,7 @@ First, build the dataloader according to [GETTING_STARTED](./data_loader/GETTING
 Take the demo video in Cityscapes `stuttgart_00.avi` as an example.
 
 ### 1.0 Download the checkpoint 
-We use [BiSeNet(pytorch version)](https://drive.google.com/file/d/1hFF-J9qoXlbVRRUr29aWeQpL4Lwn4) as the per-frame model. Download the checkpoint and put it in the root dir `./`
+We use [BiSeNet(pytorch version)](https://drive.google.com/file/d/1hFF-J9qoXlbVRRUr29aWeQpL4Lwn45mU/view?usp=sharing) as the per-frame model. Download the checkpoint and put it in the root dir `./`
 
 You can choose other models as listed in [TorchSeg](https://github.com/ycszen/TorchSeg).
 
